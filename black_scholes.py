@@ -3,11 +3,21 @@
 import numpy as np
 from scipy.stats import norm
 
-# define vars
+# default vars
+
+"""
 r = 0.01
 S = 30
 K = 40
 T = 240/365
+sigma = 0.3
+"""
+
+r = float(input("Enter the risk-free rate: "))
+S = int(input("Enter the current stock price: "))
+K = int(input("Enter the strike price: "))
+T = int(input("Enter the time to maturity in days: "))
+T = T/365
 sigma = 0.3
 
 def blackScholes(r, S, K, T, sigma, type="C"):
@@ -16,9 +26,10 @@ def blackScholes(r, S, K, T, sigma, type="C"):
     try:
         if type == "C":
             price = S*norm.cdf(d1, 0, 1) - K*np.exp(-r*T)*norm.cdf(d2, 0, 1)
+            return price
         elif type == "P":
             price = K*np.exp(-r*T)*norm.cdf(-d2, 0, 1) - S*norm.cdf(-d1, 0, 1)
-        return price
+            return price
     except:
         print("Invalid option type")
 
