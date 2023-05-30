@@ -14,9 +14,9 @@ sigma = 0.3
 """
 
 r = float(input("Enter the risk-free rate: "))
-S = int(input("Enter the current stock price: "))
-K = int(input("Enter the strike price: "))
-T = int(input("Enter the time to maturity in days: "))
+S = float(input("Enter the current stock price: "))
+K = float(input("Enter the strike price: "))
+T = float(input("Enter the time to maturity in days: "))
 T = T/365
 sigma = 0.3
 
