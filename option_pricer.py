@@ -34,10 +34,6 @@ if pricing_method == 'Black-Scholes':
     if st.button(f'Calculate option price for {ticker}'):
         # Getting data for selected ticker
         data = functions.get_historical_data(ticker, datetime.today() - timedelta(365), datetime.today())
-        st.write(data.tail())
-        functions.plot_data(data, ticker, 'Adj Close')
-        st.pyplot()
-
         # Formating selected model parameters
         spot_price = functions.get_last_price(data, 'Adj Close', functions.get_columns(data)) 
         risk_free_rate = risk_free_rate / 100
@@ -51,3 +47,6 @@ if pricing_method == 'Black-Scholes':
         else:
             put_option_price = black_scholes.calculate_put_option_price(spot_price, strike_price, days_to_maturity, risk_free_rate, sigma)
             st.subheader(f'Put option price: {put_option_price}')
+        st.write(data.tail())
+        functions.plot_data(data, ticker, 'Adj Close')
+        st.pyplot()
