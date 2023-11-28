@@ -1,37 +1,43 @@
 #implementation of the black-scholes model for option pricing
-
+import streamlit as st
 import numpy as np
 from scipy.stats import norm
+from datetime import datetime, timedelta
 
-# default vars
-
-"""
-r = 0.01
-S = 30
-K = 40
-T = 240/365
-sigma = 0.3
-"""
-
-r = float(input("Enter the risk-free rate: "))
-S = float(input("Enter the current stock price: "))
-K = float(input("Enter the strike price: "))
-T = float(input("Enter the time to maturity in days: "))
-T = T/365
-sigma = 0.3
-
-def blackScholes(r, S, K, T, sigma, type="C"):
-    d1 = (np.log(S/K) + (r + sigma**2/2)*T)/(sigma*np.sqrt(T))
-    d2 = d1 - sigma*np.sqrt(T)
-    try:
-        if type == "C":
-            price = S*norm.cdf(d1, 0, 1) - K*np.exp(-r*T)*norm.cdf(d2, 0, 1)
-            return price
-        elif type == "P":
-            price = K*np.exp(-r*T)*norm.cdf(-d2, 0, 1) - S*norm.cdf(-d1, 0, 1)
-            return price
-    except:
-        print("Invalid option type")
-
+def calculate_call_option_price(underlying_spot_price, strike_price, days_to_maturity, risk_free_rate, sigma): 
+        """
+        Calculates price for call option according to the formula.        
+        Formula: S*N(d1) - PresentValue(K)*N(d2)
+        """
+        S = underlying_spot_price
+        K = strike_price
+        T = days_to_maturity / 365
+        r = risk_free_rate
+        # cumulative function of standard normal distribution (risk-adjusted probability that the option will be exercised)     
+        d1 = (np.log(S / K) + (r + 0.5 * sigma ** 2) * T) / (sigma * np.sqrt(T))
+        
+        # cumulative function of standard normal distribution (probability of receiving the stock at expiration of the option)
+        d2 = (np.log(S / K) + (r - 0.5 * sigma ** 2) * T) / (sigma * np.sqrt(T))
+        
+        return (S * norm.cdf(d1, 0.0, 1.0) - K * np.exp(-r * T) * norm.cdf(d2, 0.0, 1.0))
     
-print("Option Price: ", round(blackScholes(r, S, K, T, sigma, type="C"), 2))
+def calculate_put_option_price(underlying_spot_price, strike_price, days_to_maturity, risk_free_rate, sigma): 
+    """
+    Calculates price for put option according to the formula.        
+    Formula: PresentValue(K)*N(-d2) - S*N(-d1)
+    """  
+    S = underlying_spot_price
+    K = strike_price
+    T = days_to_maturity / 365
+    r = risk_free_rate
+    # cumulative function of standard normal distribution (risk-adjusted probability that the option will be exercised)    
+    d1 = (np.log(S / K) + (r + 0.5 * sigma ** 2) * T) / (sigma * np.sqrt(T))
+
+    # cumulative function of standard normal distribution (probability of receiving the stock at expiration of the option)
+    d2 = (np.log(S / K) + (r - 0.5 * sigma ** 2) * T) / (sigma * np.sqrt(T))
+    
+    return (K * np.exp(-r * T) * norm.cdf(-d2, 0.0, 1.0) - S * norm.cdf(-d1, 0.0, 1.0))
+
+
+
+
