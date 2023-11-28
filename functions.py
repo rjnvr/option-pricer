@@ -3,9 +3,7 @@ import yfinance as yf
 import datetime
 
 # Third party imports
-import requests_cache
 import matplotlib.pyplot as plt
-from pandas_datareader import data as wb
 
 
 

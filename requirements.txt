@@ -1,5 +1,6 @@
 yfinance
 numpy
-scipy.stats
+scipy
 datetime
-matplotlib.pyplot
+matplotlib
+pandas
