@@ -1,10 +1,7 @@
 import yfinance as yf
-# Standard library imports
 import datetime
-
 # Third party imports
 import matplotlib.pyplot as plt
-
 
 
 def get_historical_data(ticker, start_date, end_date):
@@ -12,7 +9,6 @@ def get_historical_data(ticker, start_date, end_date):
     df = yf.download(ticker, start=start_date, end=end_date)
     return df
     
-@staticmethod
 def get_columns(data):
     """
     Gets dataframe columns from previously fetched stock data.
@@ -24,7 +20,6 @@ def get_columns(data):
         return None
     return [column for column in data.columns]
 
-@staticmethod
 def get_last_price(data, column_name, column_names):
     """
     Returns last available price for specified column from already fetched data.
@@ -40,8 +35,6 @@ def get_last_price(data, column_name, column_names):
     return data[column_name].iloc[len(data) - 1]
 
 
-
-@staticmethod
 def plot_data(data, ticker, column_name):
     """
     Plots specified column values from dataframe.
