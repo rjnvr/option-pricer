@@ -1,0 +1,5 @@
+yfinance
+numpy
+scipy.stats
+datetime
+matplotlib.pyplot
