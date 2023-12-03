@@ -26,7 +26,7 @@ method_selected = st.selectbox('Select Option method', option_method)
 if pricing_method == 'Black-Scholes':
     #Parameters for Black-Scholes model
     ticker = st.text_input('Ticker symbol', 'AAPL')
-    strike_price = st.number_input('Strike price', 300)
+    strike_price = st.number_input('Strike price', min_value=0.0, value=100.0)
     risk_free_rate = st.slider('Risk-free rate (%)', 0, 100, 10)
     sigma = st.slider('Sigma (%)', 0, 100, 20)
     exercise_date = st.date_input('Exercise date', min_value=datetime.today() + timedelta(days=1), value=datetime.today() + timedelta(days=365))
